@@ -1,5 +1,8 @@
 import Button from "@/components/common/Button";
+import { TextFieldInput } from "@/components/common/Input";
 import Image from "next/image";
+import SignUp from "./signup";
+import Router from "next/router";
 
 export default function Home() {
   return (
@@ -19,9 +22,12 @@ export default function Home() {
       <Button variant="secondary" disabled={true} onClick={() => console.log("클릭중3")}>
         Button
       </Button>
-      <Button variant="tertiary" disabled={true} onClick={() => console.log("클릭중3")}>
-        Button
+      <Button variant="tertiary" onClick={() => Router.push("/signup")}>
+        회원가입 페이지로 이동
       </Button>
+      {/* <div>
+        <SignUp></SignUp>
+      </div> */}
     </div>
   );
 }
