@@ -2,15 +2,56 @@ import Button from "@/components/common/Button";
 import TextField from "@/components/common/TextField";
 import Link from "next/link";
 import Image from "next/image";
+import { useState } from "react";
+
 export default function Login() {
+  const [idError, setIdError] = useState<boolean>(false);
+  const [passwordError, setPasswordError] = useState<boolean>(false);
+  const [id, setId] = useState<string>("");
+  const [password, setPassword] = useState<string>("");
+  const [helperIdMessage, setHelperIdMessage] = useState<string>("");
+  const [helperPasswordMessage, setHelperPasswordMessage] = useState<string>("");
   const idHandleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    console.log(e.target.value);
+    setId(e.target.value);
+    if (!id || id.length === 0) {
+      console.log("이메일 없음");
+      setIdError(true);
+      setHelperIdMessage("이메일을 입력해주세요");
+    } else {
+      setIdError(false);
+    }
+
+    if (!password || password.length === 0) {
+      setPasswordError(true);
+      setHelperPasswordMessage("비밀번호를 입력해주세요");
+    } else {
+      setPasswordError(false);
+    }
+
+    if (id && !id.includes("@")) {
+      setIdError(true);
+      setHelperIdMessage("이메일 형식으로 작성해주세요");
+    } else {
+      setPasswordError(false);
+    }
   };
 
   const passwordHandleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    console.log(e.target.value);
+    setPassword(e.target.value);
+    if (!id || id.length === 0) {
+      setIdError(true);
+      setHelperIdMessage("이메일을 입력해주세요");
+    } else {
+      setIdError(false);
+    }
+    if (!e.target.value || e.target.value.length === 0) {
+      setPasswordError(true);
+      setHelperPasswordMessage("비밀번호를 입력해주세요");
+    } else {
+      setPasswordError(false);
+    }
+    // console.log(e.target.value);
   };
-
   return (
     <>
       {/* 1. 배경 심볼 (위치 고정) */}
@@ -41,17 +82,27 @@ export default function Login() {
                 inputType="email"
                 placeholder="example@email.com"
                 onChange={idHandleChange}
+                helperStatus={idError ? "error" : "default"}
+                textHelperUsed={idError}
+                helperMessage="이메일을 입력해주세요"
+                value={id}
               />
 
               <TextField
                 fieldLabel="비밀번호"
                 inputType="password"
                 placeholder="비밀번호를 입력해주세요"
+                onChange={passwordHandleChange}
+                helperStatus={passwordError ? "error" : "default"}
+                textHelperUsed={passwordError}
+                helperMessage="비밀번호를 입력해주세요"
+                value={password}
               />
             </div>
 
             <div className="mt-[12px]">
-              <Button type="submit" variant="primary" disabled={true} className="w-full">
+              // 추후 disabled true로 default 수정
+              <Button type="submit" variant="primary" disabled={false} className="w-full">
                 로그인
               </Button>
             </div>

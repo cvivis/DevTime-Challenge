@@ -2,7 +2,7 @@ import { TextFieldInput } from "@/components/common/Input";
 import { TextFieldHelper } from "./TextFieldHepler";
 import Button from "../Button";
 
-interface TextFieldProps {
+interface TextFieldProps extends React.InputHTMLAttributes<HTMLInputElement> {
   fieldLabel?: string;
   placeholder?: string;
   buttonText?: string;
@@ -16,7 +16,6 @@ interface TextFieldProps {
 
 export default function TextField({
   fieldLabel,
-  placeholder,
   inputType,
   buttonText,
   helperMessage,
@@ -30,7 +29,7 @@ export default function TextField({
     <div>
       <label className="w full[208px] h full[18px]">{fieldLabel}</label>
       <div className="flex w-full">
-        <TextFieldInput placeholder={placeholder} type={inputType} />
+        <TextFieldInput type={inputType} {...rest} />
         {buttonUsed && (
           <Button variant="secondary" disabled={buttonDisabled}>
             {buttonText}
