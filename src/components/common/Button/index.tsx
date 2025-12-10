@@ -16,14 +16,15 @@ const Button: React.FC<ButtonProps> = ({
   ...rest
 }) => {
   const baseStyle =
-    "flex items-center justify-center h-12 px-4 py-3 rounded-[5px] font-['Pretendard'] font-semibold text-[18px] leading-[22px] transition-all duration-150 border-[1.5px] border-transparent outline-none";
+    "flex items-center justify-center w-[88px] h-12 px-4 py-3 rounded-[5px] font-['Pretendard'] font-semibold text-[18px] leading-[22px] transition-all duration-150 border-[1.5px] border-transparent outline-none whitespace-nowrap";
 
   let variantStyle = "";
 
   switch (variant) {
     case "primary":
       if (disabled) {
-        variantStyle = "bg-disabled text-gray-300 cursor-not-allowed pointer-events-none";
+        variantStyle =
+          "bg-disabled text-gray-300 cursor-not-allowed pointer-events-none";
       } else {
         variantStyle = `
           bg-primary text-white 
@@ -36,7 +37,8 @@ const Button: React.FC<ButtonProps> = ({
 
     case "secondary":
       if (disabled) {
-        variantStyle = "bg-secondary text-disabled cursor-not-allowed pointer-events-none";
+        variantStyle =
+          "bg-secondary text-disabled cursor-not-allowed pointer-events-none";
       } else {
         variantStyle = `
           bg-[rgba(76,121,255,0.1)] text-primary
@@ -49,7 +51,8 @@ const Button: React.FC<ButtonProps> = ({
 
     case "tertiary":
       if (disabled) {
-        variantStyle = "bg-gray-200 text-disabled cursor-not-allowed pointer-events-none";
+        variantStyle =
+          "bg-gray-200 text-disabled cursor-not-allowed pointer-events-none";
       } else {
         variantStyle = `
           bg-gray-50 text-primary
@@ -62,7 +65,11 @@ const Button: React.FC<ButtonProps> = ({
   }
 
   return (
-    <button className={`${baseStyle} ${variantStyle} ${className}`} disabled={disabled} {...rest}>
+    <button
+      className={`${baseStyle} ${variantStyle} ${className}`}
+      disabled={disabled}
+      {...rest}
+    >
       {children}
     </button>
   );

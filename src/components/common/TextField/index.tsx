@@ -24,8 +24,8 @@ export default function TextField({
   textHelperUsed,
 }: TextFieldProps) {
   return (
-    <div>
-      <label className="w full[208px] h full[18px]">{fieldLabel}</label>
+    <div className="w-full flex flex-col gap-2">
+      <label className="w-full h-full[18px]">{fieldLabel}</label>
       <div className="flex ">
         <TextFieldInput placeholder={placeholder} />
         {buttonUsed && (
@@ -35,7 +35,10 @@ export default function TextField({
         )}
       </div>
       {textHelperUsed && (
-        <TextFieldHelper status={helperStatus} message={helperMessage}></TextFieldHelper>
+        <TextFieldHelper
+          status={helperStatus}
+          message={helperMessage}
+        ></TextFieldHelper>
       )}
     </div>
   );
