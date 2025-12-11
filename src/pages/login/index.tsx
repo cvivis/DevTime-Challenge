@@ -14,8 +14,10 @@ export default function Login() {
   const [emailError, setEmailError] = useState<string>("");
   const [passwordError, setPasswordError] = useState<string>("");
   const [isDialogOpen, setIsDialogOpen] = useState<boolean>(false);
+  const [isDuplicateDialogOpen, setIsDuplicateDialogOpen] = useState<boolean>(false);
   const emailRef = useRef<HTMLInputElement>(null);
   const router = useRouter();
+  const { useAuthStore } = require("../../store/authStore");
 
   const validateEmail = (value: string) => {
     if (!value) return "이메일을 입력해주세요.";
@@ -61,6 +63,11 @@ export default function Login() {
     emailRef.current?.focus();
   };
 
+  const handleDuplicateDialogConfirm = () => {
+    setIsDuplicateDialogOpen(false);
+    router.push("/");
+  };
+
   const handleLogin = async (e: FormEvent) => {
     e.preventDefault();
 
@@ -76,6 +83,15 @@ export default function Login() {
     try {
       const response = await loginApi(email, password);
 
+      console.log("Login successful:", response);
+      console.log("Login successful:", response.isDuplicateLogin);
+      if (response.isDuplicateLogin) {
+        useAuthStore.getState().logout();
+        setIsDuplicateDialogOpen(true);
+        return;
+      } else {
+        router.push("/");
+      }
       if (response.isFirstLogin) {
         router.push("/mypage");
       } else {
@@ -155,6 +171,12 @@ export default function Login() {
         title="로그인 정보를 다시 확인해 주세요"
         isOpen={isDialogOpen}
         onConfirm={handleDialogConfirm}
+      ></Dialog>
+      <Dialog
+        title="중복 로그인이 불가능합니다."
+        isOpen={isDuplicateDialogOpen}
+        message="다른 기기에 중복 로그인 된 상태입니다. [확인] 버튼을 누르면 다른 기기에서 강제 로그아웃되며, 진행중이던 타이머가 있다면 기록이 자동 삭제됩니다."
+        onConfirm={handleDuplicateDialogConfirm}
       ></Dialog>
     </>
   );
