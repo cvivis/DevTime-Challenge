@@ -1,10 +1,11 @@
-import { useState, ChangeEvent, FormEvent, useReducer } from "react";
+import { useState, ChangeEvent, FormEvent, useReducer, useRef } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import Button from "@/components/common/Button";
 import TextField from "@/components/common/TextField";
 import { loginApi } from "@/api/auth";
 import { useRouter } from "next/router";
+import { Dialog } from "@/components/common/Dialog";
 
 export default function Login() {
   const [email, setEmail] = useState<string>("");
@@ -12,9 +13,10 @@ export default function Login() {
 
   const [emailError, setEmailError] = useState<string>("");
   const [passwordError, setPasswordError] = useState<string>("");
+  const [isDialogOpen, setIsDialogOpen] = useState<boolean>(false);
+  const emailRef = useRef<HTMLInputElement>(null);
   const router = useRouter();
 
-  // 2. 검증 로직 분리 (재사용성 및 가독성 향상)
   const validateEmail = (value: string) => {
     if (!value) return "이메일을 입력해주세요.";
     if (!value.includes("@")) return "이메일 형식이 아닙니다.";
@@ -54,7 +56,11 @@ export default function Login() {
     setPasswordError(validatePassword(password));
   };
 
-  // 4. 로그인 버튼 핸들러
+  const handleDialogConfirm = () => {
+    setIsDialogOpen(false);
+    emailRef.current?.focus();
+  };
+
   const handleLogin = async (e: FormEvent) => {
     e.preventDefault();
 
@@ -69,16 +75,15 @@ export default function Login() {
 
     try {
       const response = await loginApi(email, password);
-      // 성공 후 로직 (페이지 이동 등)
-      if (response.accessToken) {
-        localStorage.setItem("accessToken", response.accessToken);
+
+      if (response.isFirstLogin) {
+        router.push("/mypage");
+      } else {
+        router.push("/");
       }
-      if (response.refreshToken) {
-        localStorage.setItem("refreshToken", response.refreshToken);
-      }
-      router.push("/");
     } catch (error) {
       console.error(error);
+      setIsDialogOpen(true);
     }
   };
 
@@ -106,11 +111,11 @@ export default function Login() {
                 inputType="email"
                 placeholder="example@email.com"
                 value={email}
+                ref={emailRef}
                 onChange={handleEmailChange}
                 onBlur={handleEmailBlur} // ✨ 포커스 나갈 때 검증
-                // 에러 메시지가 있으면 상태를 error로 변경
-                textHelperUsed={!!emailError} // 에러 메시지가 있으면 true
-                helperStatus={emailError ? "error" : "default"}
+                textHelperUsed={emailError.length > 0} // 에러 메시지가 있으면 true
+                helperStatus={emailError.length > 0 ? "error" : "default"}
                 helperMessage={emailError}
               />
 
@@ -122,8 +127,8 @@ export default function Login() {
                 value={password}
                 onChange={handlePasswordChange}
                 onBlur={handlePasswordBlur} // ✨ 포커스 나갈 때 검증
-                textHelperUsed={!!passwordError}
-                helperStatus={passwordError ? "error" : "default"}
+                textHelperUsed={passwordError.length > 0} // 에러 메시지가 있으면 true
+                helperStatus={passwordError.length > 0 ? "error" : "default"}
                 helperMessage={passwordError}
               />
             </div>
@@ -148,6 +153,11 @@ export default function Login() {
           </div>
         </div>
       </div>
+      <Dialog
+        title="로그인 정보를 다시 확인해 주세요"
+        isOpen={isDialogOpen}
+        onConfirm={handleDialogConfirm}
+      ></Dialog>
     </>
   );
 }
