@@ -19,15 +19,12 @@ export default function Home() {
       <Button variant="primary" disabled={true} onClick={() => console.log("클릭중3")}>
         Button
       </Button>
-      <Button variant="secondary" disabled={true} onClick={() => console.log("클릭중3")}>
-        Button
+      <Button variant="secondary" onClick={() => Router.push("/login")}>
+        로그인
       </Button>
       <Button variant="tertiary" onClick={() => Router.push("/signup")}>
         회원가입 페이지로 이동
       </Button>
-      {/* <div>
-        <SignUp></SignUp>
-      </div> */}
     </div>
   );
 }
