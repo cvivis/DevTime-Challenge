@@ -89,23 +89,21 @@ export default function Login() {
 
   return (
     <>
-      <Image
-        src="/Symbol Logo.svg"
-        alt="backgroundImage"
-        width={1090}
-        height={530}
-        className="absolute left-[1048px] top-[60px] pointer-events-none -z-10"
-      />
       <div className="relative w-full min-h-screen bg-white overflow-hidden flex items-center justify-center">
-        {/* 카드 컨테이너 */}
+        <Image
+          src="/LoginBgImg.svg"
+          alt="backgroundImage"
+          width={1090}
+          height={530}
+          className="absolute left-[1048px] top-[60px] pointer-events-none"
+        />
         <div className="w-[500px] h-[598px] bg-white/50 rounded-[10px] shadow-[0px_40px_100px_40px_rgba(3,104,255,0.05)] backdrop-blur-[25px] flex flex-col items-center pt-[100px] px-[86px]">
           <div className="mb-[48px]">
-            <Image src="/✅ Logo.svg" alt="Logo" width={132} height={100} />
+            <Image src="/Logo2.svg" alt="Logo" width={132} height={100} />
           </div>
 
           <form onSubmit={handleLogin} className="w-full flex flex-col gap-[36px]">
             <div className="flex flex-col gap-[36px]">
-              {/* 이메일 필드 */}
               <TextField
                 fieldLabel="이메일"
                 inputType="email"
