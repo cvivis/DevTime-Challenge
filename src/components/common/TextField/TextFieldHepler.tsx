@@ -7,7 +7,6 @@ interface HelperTextProps {
 export const TextFieldHelper = ({ message, status, className }: HelperTextProps) => {
   const baseStyle = "mt-1 text-sm";
   let textColor = "text-green-500";
-  console.log(status);
   switch (status) {
     case "error":
       textColor = "text-red-500";

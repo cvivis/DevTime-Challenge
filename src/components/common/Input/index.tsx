@@ -6,7 +6,7 @@ export interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> 
 }
 export const TextFieldInput = React.forwardRef<HTMLInputElement, InputProps>(
   ({ isError, className = "", ...rest }, ref) => {
-    const baseStyle = `w-full[120px] h-full[44px] box-border px-4 py-3 rounded-[5px]
+    const baseStyle = `w-full h-full[44px] box-border px-4 py-3 rounded-[5px]
         bg-gray-50
         text-gray-400,
         focus:text-gray-600,
