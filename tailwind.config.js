@@ -33,7 +33,7 @@ module.exports = {
 
         /*
 
-Status/Secondary Color Palette (상태 컬러)
+          Status/Secondary Color Palette (상태 컬러)
 
 */
 
@@ -111,7 +111,11 @@ Gray Scale (Gray/Slate 컬러)
       },
 
       backgroundImage: {
-        "primary-gradient": "linear-gradient(119.36deg, #4C79FF 0%, #023E99 100%)",
+        "primary-gradient":
+          "linear-gradient(135deg, rgba(76, 121, 255, 0) 0%, rgba(76, 121, 255, 0.2) 100%)",
+      },
+      fontFamily: {
+        digital: ["Digital Numbers", "sans-serif"],
       },
     },
   },
