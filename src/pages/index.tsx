@@ -14,7 +14,7 @@ export default function Home() {
   const [textValue, setTextValue] = useState("HOURS");
   return (
     <div className="flex flex-col">
-      <div className="flex flex-col items-center w-[1200px]">
+      <div className="flex justify-center items-center w-[1200px]">
         <NavigationBar></NavigationBar>
       </div>
       <div className="flex flex-col items-center mt-20 mb-20 w-full">
@@ -26,9 +26,13 @@ export default function Home() {
         </p>
         <div className="flex flex-row gap-8 mt-16">
           <Timer value={hourValue} text={textValue}></Timer>
-          <div className="flex flex-col w-[24px] gap-[64px] text-[154px] text-primary h-">:</div>
+          <div className="flex flex-col w-[24px] gap-[64px] text-[154px] text-primary h-">
+            :
+          </div>
           <Timer value={minuteValue} text={textValue}></Timer>
-          <div className="flex flex-col w-[24px] gap-[64px] text-[154px] text-primary h-">:</div>
+          <div className="flex flex-col w-[24px] gap-[64px] text-[154px] text-primary h-">
+            :
+          </div>
           <Timer value={secondValue} text={textValue}></Timer>
         </div>
         <div className="flex gap-[134px]"></div>
