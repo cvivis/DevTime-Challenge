@@ -113,6 +113,7 @@ Gray Scale (Gray/Slate 컬러)
       backgroundImage: {
         "primary-gradient":
           "linear-gradient(135deg, rgba(76, 121, 255, 0) 0%, rgba(76, 121, 255, 0.2) 100%)",
+        "secondary-gradient": "linear-gradient(135deg, #F6F7F9 0%, #E9ECF5 100%)",
       },
       fontFamily: {
         digital: ["Digital Numbers", "sans-serif"],

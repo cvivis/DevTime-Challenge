@@ -3,7 +3,7 @@ interface TimerProps {
   text: string;
 }
 
-const Timer = ({ value, text }: TimerProps) => {
+const TimerBlock = ({ value, text }: TimerProps) => {
   return (
     <div className="flex justify-even">
       <div className="flex flex-col items-center bg-primary-gradient w-[264px] h-[298px] ">
@@ -18,4 +18,4 @@ const Timer = ({ value, text }: TimerProps) => {
   );
 };
 
-export default Timer;
+export default TimerBlock;

@@ -11,7 +11,7 @@ const NavigationBar = () => {
     { label: "회원가입", href: "/signup" },
   ];
   return (
-    <nav className=" flex flex-row justify-center w-full bg-white  font-['Pretendard'] font-weght-600 font-bold text-[16px] font-height-20px text-indigo-dark">
+    <nav className=" flex flex-row bg-transparent justify-center w-full bg-white  font-['Pretendard'] font-weght-600 font-bold text-[16px] font-height-20px text-indigo-dark">
       <div className="flex items-center w-full justify-between">
         <div className="flex items-center mr-[48px] gap-9 ">
           <Link href={"/"}>
@@ -27,10 +27,7 @@ const NavigationBar = () => {
             <ul className="flex items-center  gap-9">
               {NAV_ITEMS.map((item) => (
                 <li key={item.href}>
-                  <Link
-                    href={item.href}
-                    className="text-[16px]hover:text-blue-600"
-                  >
+                  <Link href={item.href} className="text-[16px]hover:text-blue-600">
                     {item.label}
                   </Link>
                 </li>

@@ -1,20 +1,38 @@
-import Button from "@/components/common/Button";
-import { TextFieldInput } from "@/components/common/Input";
-import Image from "next/image";
-import SignUp from "./signup";
-import Router from "next/router";
 import NavigationBar from "@/components/common/NabigationBar";
-import Timer from "@/components/Timer";
-import { useState } from "react";
+import TimerAction from "@/components/TimerAction";
+import Timer from "@/components/common/Timer";
+import { useEffect, useState } from "react";
+export default function Main() {
+  const [time, setTime] = useState("00:00:00");
+  const [isRunning, setIsRunning] = useState(false);
+  const [startTime, setStartTime] = useState<Date | null>(null);
 
-export default function Home() {
-  const [hourValue, setThourValue] = useState("25");
-  const [minuteValue, setMinuteValue] = useState("00");
-  const [secondValue, setSecondValue] = useState("00");
-  const [textValue, setTextValue] = useState("HOURS");
+  useEffect(() => {
+    let timer: NodeJS.Timeout;
+    if (isRunning) {
+      if (!startTime) {
+        setStartTime(new Date());
+        return;
+      }
+      timer = setInterval(() => {
+        const now = new Date();
+        const diffTime = now.getTime() - startTime!.getTime();
+
+        const hours = String(Math.floor(diffTime / (1000 * 60 * 60))).padStart(2, "0");
+        const minutes = String(Math.floor((diffTime % (1000 * 60 * 60)) / (1000 * 60))).padStart(
+          2,
+          "0"
+        );
+        const seconds = String(Math.floor((diffTime % (1000 * 60)) / 1000)).padStart(2, "0");
+        setTime(`${hours}:${minutes}:${seconds}`);
+      }, 1000);
+    }
+    return () => clearInterval(timer);
+  }, [isRunning, startTime]);
+
   return (
-    <div className="flex flex-col">
-      <div className="flex justify-center items-center w-[1200px]">
+    <div className="flex flex-col bg-secondary-gradient min-h-screen w-full">
+      <div className="flex justify-center items-center w-full">
         <NavigationBar></NavigationBar>
       </div>
       <div className="flex flex-col items-center mt-20 mb-20 w-full">
@@ -24,18 +42,8 @@ export default function Home() {
         <p className="text-[#023E99] text-sm md:text-base font-normal opacity-80">
           DevTime을 사용하려면 로그인이 필요합니다.
         </p>
-        <div className="flex flex-row gap-8 mt-16">
-          <Timer value={hourValue} text={textValue}></Timer>
-          <div className="flex flex-col w-[24px] gap-[64px] text-[154px] text-primary h-">
-            :
-          </div>
-          <Timer value={minuteValue} text={textValue}></Timer>
-          <div className="flex flex-col w-[24px] gap-[64px] text-[154px] text-primary h-">
-            :
-          </div>
-          <Timer value={secondValue} text={textValue}></Timer>
-        </div>
-        <div className="flex gap-[134px]"></div>
+        <Timer time={`${time}`}></Timer>
+        <TimerAction></TimerAction>
       </div>
     </div>
   );
